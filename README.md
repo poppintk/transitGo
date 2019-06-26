@@ -1,5 +1,5 @@
 # unknown
-Starter code for node server
+Starter code for node restful server
 
 Environment: Node, Mongodb
 
