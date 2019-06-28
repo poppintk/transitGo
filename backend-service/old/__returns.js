@@ -1,27 +1,26 @@
 const moment = require('moment');
 const request = require('supertest');
-const {Rental} = require('../../models/rental');
-const {Movie} = require('../../models/movie');
-const {User} = require('../../models/user');
+const { Rental } = require('../../models/rental');
+const { Movie } = require('../../models/movie');
+const { User } = require('../../models/user');
 const mongoose = require('mongoose');
 
 describe('/api/returns', () => {
-  let server; 
-  let customerId; 
+  let server;
+  let customerId;
   let movieId;
   let rental;
-  let movie; 
+  let movie;
   let token;
 
-  const exec = () => {
-    return request(server)
+  const exec = () =>
+    request(server)
       .post('/api/returns')
       .set('x-auth-token', token)
       .send({ customerId, movieId });
-  };
-  
-  beforeEach(async () => { 
-    server = require('../../index'); 
+
+  beforeEach(async () => {
+    server = require('../../index');
 
     customerId = mongoose.Types.ObjectId();
     movieId = mongoose.Types.ObjectId();
@@ -32,7 +31,7 @@ describe('/api/returns', () => {
       title: '12345',
       dailyRentalRate: 2,
       genre: { name: '12345' },
-      numberInStock: 10 
+      numberInStock: 10
     });
     await movie.save();
 
@@ -51,11 +50,11 @@ describe('/api/returns', () => {
     await rental.save();
   });
 
-  afterEach(async () => { 
-    await server.close(); 
+  afterEach(async () => {
+    await server.close();
     await Rental.remove({});
     await Movie.remove({});
-  });  
+  });
 
   it('should return 401 if client is not logged in', async () => {
     token = '';
@@ -66,15 +65,15 @@ describe('/api/returns', () => {
   });
 
   it('should return 400 if customerId is not provided', async () => {
-    customerId = ''; 
-    
+    customerId = '';
+
     const res = await exec();
 
     expect(res.status).toBe(400);
   });
 
   it('should return 400 if movieId is not provided', async () => {
-    movieId = ''; 
+    movieId = '';
 
     const res = await exec();
 
@@ -113,7 +112,9 @@ describe('/api/returns', () => {
   });
 
   it('should set the rentalFee if input is valid', async () => {
-    rental.dateOut = moment().add(-7, 'days').toDate();
+    rental.dateOut = moment()
+      .add(-7, 'days')
+      .toDate();
     await rental.save();
 
     const res = await exec();
@@ -135,7 +136,13 @@ describe('/api/returns', () => {
     const rentalInDb = await Rental.findById(rental._id);
 
     expect(Object.keys(res.body)).toEqual(
-      expect.arrayContaining(['dateOut', 'dateReturned', 'rentalFee',
-      'customer', 'movie']));
+      expect.arrayContaining([
+        'dateOut',
+        'dateReturned',
+        'rentalFee',
+        'customer',
+        'movie'
+      ])
+    );
   });
 });
