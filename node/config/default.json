@@ -1,4 +1,4 @@
 {
   "jwtPrivateKey": "vidly_jwtPrivateKey",
-  "db": "mongodb://localhost/admin"
+  "db": "mongodb://localhost/gtfs"
 }

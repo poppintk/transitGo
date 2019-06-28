@@ -1,0 +1,11 @@
+{
+  "mongoUrl": "mongodb://localhost:27017/gtfs",
+  "agencies": [
+    {
+      "agency_key": "county-connection",
+      "url": "https://www.gotransit.com/static_files/gotransit/assets/Files/GO_GTFS.zip",
+      "verbose": true,
+      "skipDelete": false
+    }
+  ]
+}
