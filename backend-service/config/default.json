@@ -1,4 +1,4 @@
 {
   "jwtPrivateKey": "vidly_jwtPrivateKey",
-  "db": "mongodb://localhost/gtfs"
+  "db": "mongodb+srv://poppintk:Null19901015@cluster0-wgibw.mongodb.net/gtfs?retryWrites=true&w=majority"
 }

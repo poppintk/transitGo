@@ -1,5 +1,5 @@
 {
-  "mongoUrl": "mongodb://localhost:27017/gtfs",
+  "mongoUrl": "mongodb+srv://poppintk:Null19901015@cluster0-wgibw.mongodb.net/gtfs?retryWrites=true&w=majority",
   "agencies": [
     {
       "agency_key": "GO Transit",

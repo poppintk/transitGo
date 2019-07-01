@@ -1,27 +1,35 @@
-const express = require('express');
-const gtfs = require('gtfs');
+const express = require("express");
+const config = require("config");
+const MongoClient = require("mongodb").MongoClient;
+// Create a new MongoClient
+const client = new MongoClient(config.get("db"));
+let db;
+// Use connect method to connect to the Server
+client.connect(function(err, client) {
+  if (err) winston.error(err);
+  console.log("Connected correctly to server");
+  db = client.db("gtfs");
+});
 
 const router = express.Router();
 
-const capitalize = apiEndPoint =>
-  apiEndPoint.charAt(0).toUpperCase() + apiEndPoint.slice(1);
-
-router.post('/:apiEndPoint', async (req, res) => {
+router.post("/:apiEndPoint", async (req, res) => {
   const { apiEndPoint } = req.params;
-  if (!apiEndPoint) return res.status(404).send('No Api end point.');
-  const cap = capitalize(apiEndPoint);
-  const method = `get${cap}`;
-  const body = req.body;
-  if (!body) return res.status(404).send('Body is empty.');
-
+  if (!apiEndPoint) return res.status(404).send("No Api end point.");
+  const query = req.body.query;
+  const limit = req.body.limit;
+  if (!req.body) return res.status(404).send("Body is empty.");
   try {
-    const agency = await gtfs[method]({
-      ...body
-    });
-
-    res.send(agency);
+    const collection = db.collection(apiEndPoint);
+    const result = await collection
+      .find({
+        ...query
+      })
+      .limit(limit)
+      .toArray();
+    res.send(result);
   } catch (e) {
-    res.send('method or body Invalid');
+    res.send("method or body Invalid");
   }
 });
 
