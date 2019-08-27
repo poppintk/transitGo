@@ -1,7 +1,7 @@
 # unknown
 Starter code for node restful server
 
-Environment: Node, Mongodb
+Environment: NodeJs, Mongodb
 
 # How to run
 npm install &
