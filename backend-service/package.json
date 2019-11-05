@@ -23,7 +23,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "mongodb": "^3.2.7",
-    "mongoose": "^5.0.2",
+    "mongoose": "^5.7.5",
     "node-gyp": "^5.0.1",
     "node-pre-gyp": "^0.13.0",
     "winston": "^2.4.0",
